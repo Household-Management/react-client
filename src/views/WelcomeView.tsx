@@ -1,8 +1,12 @@
 import * as React from "react";
-import {Component} from "react"
+import {Component, Context} from "react"
 import {Grid, Button} from "@material-ui/core";
+import WithRouter from "./WithRouter";
+import {match, RouteComponentProps, StaticContext} from "react-router";
+import {History, Location} from "history";
 
-export default class WelcomeView extends Component {
+@WithRouter
+export default class WelcomeView extends Component<WelcomeViewProps> {
     render() {
         return (<Grid
             container
@@ -20,9 +24,19 @@ export default class WelcomeView extends Component {
             </Grid>
             <Grid item xs={12}>
                 <div>
-                    <Button variant="contained" color="primary" fullWidth>Log In</Button>
+                    <Button variant="contained" color="primary" fullWidth
+                    onClick={()=>{
+                        this.props.history.push("/login");
+                    }}>Log In</Button>
                 </div>
             </Grid>
         </Grid>);
     }
+}
+
+class WelcomeViewProps implements RouteComponentProps{
+    history: History;
+    location: Location;
+    match: match<any>;
+    staticContext?: StaticContext;
 }
