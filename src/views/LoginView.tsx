@@ -1,16 +1,18 @@
-import {Component} from "react";
-import {match, RouteComponentProps, StaticContext} from "react-router";
+import {match, RouteComponentProps, StaticContext, withRouter} from "react-router";
 import {History, Location} from "history";
 import Grid from "@material-ui/core/Grid";
 import * as React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Auth } from "aws-amplify";
-import WithRouter from "./WithRouter";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import AppState from "../state/AppState";
+import {Dispatch} from "redux";
+import { connect } from "react-redux";
+import AuthenticateUserAction from "../actions/AuthenticateUserAction";
 
-@WithRouter
-export default class LoginView extends Component<LoginViewProps, LoginViewState> {
-    constructor(props: LoginViewProps) {
+export class LoginView extends React.Component<LoginViewProps & LoginViewActions, LoginViewState> {
+    constructor(props: LoginViewProps & LoginViewActions) {
         super(props);
         this.state = {};
         this.signIn = this.signIn.bind(this);
@@ -25,10 +27,11 @@ export default class LoginView extends Component<LoginViewProps, LoginViewState>
             this.setState({
                 signInStatus: "Signing In..."
             });
-            Auth.signIn(this.state.email!, this.state.password).then(()=>{
+            Auth.signIn(this.state.email!, this.state.password).then((user:CognitoUser)=>{
                 this.setState({
                     signInStatus: undefined
                 });
+                this.props.authenticate(user);
             }).catch((err)=>{
                 this.setState({
                     signInStatus: undefined
@@ -100,6 +103,10 @@ class LoginViewProps implements RouteComponentProps {
     staticContext?: StaticContext;
 }
 
+class LoginViewActions {
+    authenticate: (user:CognitoUser) => void
+}
+
 class LoginViewState {
     lastUpdatedProperty?: string;
     email?: string;
@@ -108,3 +115,16 @@ class LoginViewState {
     passwordInputMessage?: string;
     signInStatus?:string;
 }
+
+const connected = connect((state:AppState, ownProps:any)=>{
+    return {...state, ...ownProps};
+}, (dispatch:Dispatch, ownProps:any) => {
+    return {
+        authenticate: (user:CognitoUser) => {
+            console.log(user);
+            dispatch({...new AuthenticateUserAction(user)})
+        }
+    }
+})(LoginView);
+
+export default withRouter(connected);
