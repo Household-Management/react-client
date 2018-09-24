@@ -1,12 +1,10 @@
 import * as React from "react";
-import {Component, Context} from "react"
+import {Component} from "react"
 import {Grid, Button} from "@material-ui/core";
-import WithRouter from "./WithRouter";
-import {match, RouteComponentProps, StaticContext} from "react-router";
+import {match, RouteComponentProps, StaticContext, withRouter} from "react-router";
 import {History, Location} from "history";
 
-@WithRouter
-export default class WelcomeView extends Component<WelcomeViewProps> {
+class WelcomeView extends Component<WelcomeViewProps> {
     render() {
         return (<Grid
             container
@@ -40,3 +38,5 @@ class WelcomeViewProps implements RouteComponentProps{
     match: match<any>;
     staticContext?: StaticContext;
 }
+
+export default withRouter(WelcomeView);
