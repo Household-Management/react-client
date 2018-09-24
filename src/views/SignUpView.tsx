@@ -93,6 +93,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                         signInStatus: undefined
                     });
                     this.props.authenticate(userCreationResult.user);
+                    console.info("Naigating to home");
                     this.props.history.replace("/home");
                 } else {
                     console.error("Something went wrong when signing up.");
@@ -185,6 +186,12 @@ class SignUpViewState {
 
 const connected = connect((state: any, ownProps: any) => {
     return {...state, ...ownProps};
+}, (dispatch:Dispatch, ownProps:any)=>{
+  return {
+    authenticate: (user:CognitoUser) => {
+      dispatch({...new AuthenticateUserAction(user)})
+    }
+  }
 })(SignUpView);
 
 export default withRouter(connected);
