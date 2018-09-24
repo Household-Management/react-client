@@ -5,7 +5,7 @@ import * as React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import {Auth} from "aws-amplify";
-import {CognitoUser} from "amazon-cognito-identity-js";
+import {CognitoUser, ISignUpResult} from "amazon-cognito-identity-js";
 import AppState from "../state/AppState";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
@@ -20,6 +20,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
     }
 
     validate() {
+        console.info("Validating");
         switch (this.state.lastUpdatedProperty) {
             case "password":
             case "passwordConfirm":
@@ -44,39 +45,59 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                     })
                 }
         }
+        let valid = this.state.email && this.state.password && (this.state.password === this.state.passwordConfirm);
+        console.info(valid ? "Valid" : "Invalid");
+        return valid;
     }
 
 
     signUp() {
-        if (this.state.email && this.state.password && this.state.password === this.state.passwordConfirm) {
-            if (this.state.email && this.state.password) {
-                this.setState({
-                    emailInputMessage: undefined,
-                    passwordInputMessage: undefined,
-                    passwordConfirmInputMessage: undefined
-                });
-                this.setState({
-                    signInStatus: "Signing In..."
-                });
-                Auth.signIn(this.state.email, "")
-                    .catch(error => {
-                        return error;
-                    }).then((existingUserResult) => {
-                    if (existingUserResult.code !== "UserNotFoundException") {
+        if (this.validate()) {
+            this.setState({
+                emailInputMessage: undefined,
+                passwordInputMessage: undefined,
+                passwordConfirmInputMessage: undefined
+            });
+            this.setState({
+                signInStatus: "Signing In..."
+            });
+            console.info("Checking if user already exists")
+            Auth.signIn(this.state.email, "foobar").then(result => {
+                throw new Error("Whoops");
+            }).catch(err => {
+                console.error(err);
+                switch (err.code) {
+                    case "NotAuthorizedException":
+                    case "UserNotConfirmedException":
+                        this.setState({
+                            signInStatus: undefined,
+                            emailInputMessage: "This email is already in use."
+                        })
+                        break;
+                    case "UserNotFoundException":
+                        console.info("Creating new user");
                         return Auth.signUp({
                             username: this.state.email!,
-                            password: this.state.password!
-                        });
-                    }
-                }).then((userCreationResult: any) => {
+                            password: this.state.password!,
+                            attributes: {
+                                email: this.state.email!
+                            }
+                        }).catch(err => {
+                            console.error(err);
+                        })
+                }
+            }).then((userCreationResult?: ISignUpResult) => {
+                if (userCreationResult) {
+                    console.info("User creation complete");
                     this.setState({
                         signInStatus: undefined
                     });
                     this.props.authenticate(userCreationResult.user);
                     this.props.history.replace("/home");
-                })
-
-            }
+                } else {
+                    console.error("Something went wrong when signing up.");
+                }
+            })
         }
     }
 
@@ -117,7 +138,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                 </Grid>
                 <Grid item xs={12}>
                     <div style={{textAlign: "center"}}>
-                        <TextField required label={this.state.passwordConfirmInputMessage || "Password"}
+                        <TextField required label={this.state.passwordConfirmInputMessage || "Password Confirmation"}
                                    placeholder="Confirm Password" type="password"
                                    error={!!this.state.passwordConfirmInputMessage}
                                    onChange={event => {
@@ -131,7 +152,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                 <Grid item xs={12}>
                     <div style={{textAlign: "center"}}>
                         <Button variant="contained" color="primary"
-                                onClick={this.signIn}>{this.state.signInStatus || "Sign Up"}</Button>
+                                onClick={this.signUp}>{this.state.signInStatus || "Sign Up"}</Button>
                     </div>
                 </Grid>
             </Grid>

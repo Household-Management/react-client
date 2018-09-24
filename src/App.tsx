@@ -4,6 +4,7 @@ import './App.css';
 import {Route} from "react-router-dom";
 import WelcomeView from "./views/WelcomeView";
 import LoginView from "./views/LoginView";
+import SignUpView from "./views/SignUpView";
 import {Switch} from "react-router";
 import { Auth } from "aws-amplify";
 import AwsExports from "./aws-exports";
@@ -17,6 +18,7 @@ class App extends Component {
                 <Switch>
                     <Route path="/" component={WelcomeView} exact/>
                     <Route path="/login" component={LoginView}/>
+                    <Route path="/signup" component={SignUpView}/>
                 </Switch>
             </div>
         );
