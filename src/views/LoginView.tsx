@@ -32,6 +32,7 @@ export class LoginView extends React.Component<LoginViewProps & LoginViewActions
                     signInStatus: undefined
                 });
                 this.props.authenticate(user);
+                this.props.history.replace("/home");
             }).catch((err)=>{
                 this.setState({
                     signInStatus: undefined
