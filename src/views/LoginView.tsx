@@ -92,6 +92,14 @@ export class LoginView extends React.Component<LoginViewProps & LoginViewActions
                                 onClick={this.signIn}>{this.state.signInStatus || "Log In"}</Button>
                     </div>
                 </Grid>
+                <Grid item xs={12}>
+                    <div style={{textAlign: "center"}}>
+                        <Button variant="contained" color="primary"
+                                onClick={()=>{
+                                    this.props.history.push("/signup");
+                                }}>Not yet a user? Sign up</Button>
+                    </div>
+                </Grid>
             </Grid>
         )
     }
