@@ -27,3 +27,4 @@ yarn-error.log*
 !App.test.js
 !aws-*.js
 !backend\**\*.js
+!gulpfile.js
