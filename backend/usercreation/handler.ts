@@ -15,23 +15,23 @@ export function userCreation(event: any, context: any, callback: any) {
     console.info("Checking if database user exists.");
     dynamodb.getItem(params, (err: AWSError, data: AWS.DynamoDB.GetItemOutput) => {
       if(err){
-        console.error(err);
+        throw err;
       }
       console.info("getItem completed");
         if (!data.Item) {
           console.info("User does not exist.");
             let userCreationParams = {
                 Item: {
-                    Key: {
+                    email: {
                         S: (event.request.userAttributes.email as string)
                     }
 
                 },
-                TableName: "Homeplanit-users"
+                TableName: "Homeplanit-Users"
             };
             dynamodb.putItem(userCreationParams, (err) => {
               if(err){
-                console.error(err);
+                throw err;
               } else {
                 console.info("User put completed.");
               }
