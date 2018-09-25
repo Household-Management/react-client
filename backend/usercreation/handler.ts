@@ -29,9 +29,13 @@ export function userCreation(event: any, context: any, callback: any) {
                 },
                 TableName: "Homeplanit-users"
             };
-            dynamodb.putItem(userCreationParams, () => {
-              console.info("User put completed.");
-                callback(null, event);
+            dynamodb.putItem(userCreationParams, (err) => {
+              if(err){
+                console.error(err);
+              } else {
+                console.info("User put completed.");
+              }
+              callback(null, event);
             })
         } else {
             console.warn("User already existed!");
