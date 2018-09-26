@@ -2,7 +2,7 @@ import * as React from "react";
 import {Grid, Button} from "@material-ui/core";
 import { connect } from "react-redux";
 import AppState from "appState";
-import ProtectedRoute from "../state/ProtectedRoute";
+import ProtectedRoute from "../state/AuthenticatedRoute";
 
 @ProtectedRoute("/login")
 export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
@@ -13,7 +13,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
       direction="row"
       justify="center"
       alignItems="center"
-      spacing={12}
+      spacing={16}
       >
         <Grid item>
           <div>
