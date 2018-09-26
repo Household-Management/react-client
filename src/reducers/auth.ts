@@ -4,7 +4,7 @@ import AuthenticateUserAction from "../actions/AuthenticateUserAction";
 
 export default (state:AuthState, action:Action<any>) => {
     if(state === undefined) {
-        return new AuthState();
+        return null;
     }
     if(action.type === AuthenticateUserAction.TYPE){
         return AuthenticateUserHandler(state, (action as AuthenticateUserAction));
