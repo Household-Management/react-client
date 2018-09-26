@@ -3,6 +3,7 @@ import AWS = require("aws-sdk");
 import {AWSError} from "aws-sdk";
 
 export function userCreation(event: any, context: any, callback: any) {
+  console.log("This is a test!");
     const dynamodb = new AWS.DynamoDB();
     let params = {
       Key: {
