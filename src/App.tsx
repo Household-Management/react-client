@@ -5,6 +5,8 @@ import {Route} from "react-router-dom";
 import WelcomeView from "./views/WelcomeView";
 import LoginView from "./views/LoginView";
 import SignUpView from "./views/SignUpView";
+import TasksView from "./views/TasksView";
+import MissingView from "./views/MissingView";
 import {Switch} from "react-router";
 import { Auth } from "aws-amplify";
 import AwsExports from "./aws-exports";
@@ -19,6 +21,9 @@ class App extends Component {
                     <Route path="/" component={WelcomeView} exact/>
                     <Route path="/login" component={LoginView}/>
                     <Route path="/signup" component={SignUpView}/>
+                    <Route path="/tasks" component={TasksView}/>
+
+                    <Route component={MissingView}/>
                 </Switch>
             </div>
         );

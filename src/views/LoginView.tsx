@@ -130,7 +130,6 @@ const connected = connect((state:AppState, ownProps:any)=>{
 }, (dispatch:Dispatch, ownProps:any) => {
     return {
         authenticate: (user:CognitoUser) => {
-            console.log(user);
             dispatch({...new AuthenticateUserAction(user)})
         }
     }
