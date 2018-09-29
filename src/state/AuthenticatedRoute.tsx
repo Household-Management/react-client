@@ -12,7 +12,7 @@ export default (redirectPath:string) => {
       if(!this.props.auth){
         return (<Redirect to={redirectPath}/>);
       } else {
-        return originalRender();
+        return originalRender.call(this);
       }
     }
   }

@@ -24,7 +24,9 @@ yarn-error.log*
 .idea
 
 *.js*
+!index.js
 !App.test.js
 !aws-*.js
 !backend\**\*.js
 !gulpfile.js
+!registerServiceWorker.js
