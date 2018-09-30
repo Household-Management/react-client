@@ -161,7 +161,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
     }
 }
 
-class SignUpViewProps
+interface SignUpViewProps
     implements RouteComponentProps {
     history: History;
     location: Location;
@@ -169,7 +169,7 @@ class SignUpViewProps
     staticContext?: StaticContext;
 }
 
-class SignUpViewActions {
+interface SignUpViewActions {
     authenticate: (user: CognitoUser) => void
 }
 

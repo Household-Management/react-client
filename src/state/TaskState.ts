@@ -1,3 +1,3 @@
 export default class TaskState {
-  public tasks:Task[];
+  public tasks:Task[] = [];
 }
