@@ -47,25 +47,36 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
     return(<React.Fragment>
       <Grid
       container
-      direction="row"
+      direction="column"
       justify="center"
-      alignItems="center"
+      alignItems="stretch"
       justifyContent="center"
       spacing={16}
       >
-      {this.props.tasks.tasks.length > 0 && 
         <Grid item xs={12}>
           <Paper>
-            <List component="nav">
-              {this.props.tasks.tasks.map(task => {
+            <Grid container
+              justify="center"
+              direction="column"
+              alignItems="stretch">
+              <Grid item>
+                <div style={{textAlign:"center"}}>
+                  To-Dos
+                </div>
+              </Grid>
+              <Grid item>
+                <List>
+                  {this.props.tasks.tasks.map(task => {
                 return (
                   <ListItem button>
                     <ListItemText primary={task.title}/>
                   </ListItem>)
               })}
-            </List>
+                </List>
+              </Grid>
+            </Grid>
           </Paper>
-        </Grid>}
+        </Grid>
         <Grid item xs={12}>
           <div style={{textAlign: "center"}}>
             <Button variant="fab" color="primary" onClick={this.showNewTaskModal}>

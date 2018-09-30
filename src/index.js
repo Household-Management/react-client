@@ -10,8 +10,9 @@ import reducers from "./reducers";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from 'redux-persist/integration/react'
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
-const store = createStore(persistReducer({storage, key: 'root'},reducers), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(persistReducer({storage, key: 'root', stateReconciler: hardSet},reducers), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
     <Provider store={store}>
