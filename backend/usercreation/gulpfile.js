@@ -14,7 +14,7 @@ gulp.task('clean', once(done => {
 
 gulp.task('compile', gulp.series('clean', () => {
     return gulp.src('*.ts')
-        .pipe(typescript.createProject("tsconfig.json")())
+        .pipe(typescript.createProject("../../tsconfig.json")())
         .pipe(gulp.dest('dist'));
 }));
 
