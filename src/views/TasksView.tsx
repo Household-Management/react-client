@@ -1,12 +1,16 @@
 import * as React from "react";
-import {Grid, Button, TextField, List, ListItem, ListItemText, Paper, IconButton} from "@material-ui/core";
+import {Grid, Button, TextField, List, ListItem, ListItemText, ListItemButton, Paper, IconButton} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelCircleIcon from "@material-ui/icons/Cancel";
 import { connect } from "react-redux";
 import AppState from "../state/AppState";
 import ProtectedRoute from "../state/AuthenticatedRoute";
 import * as Modal from "react-modal";
 import Task from "../state/tasks/Task";
 import TaskAction from "../actions/NewTaskAction";
+import {FormattedDate, FormattedTime} from "react-intl";
+import Tooltip from "@material-ui/core/Tooltip";
 
 @ProtectedRoute("/login")
 export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
@@ -69,7 +73,24 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
                   {this.props.tasks.tasks.map(task => {
                 return (
                   <ListItem button>
-                    <ListItemText primary={task.title}/>
+                    <Tooltip title="Complete">
+                      <IconButton>
+                        <CheckCircleIcon color="primary"/>
+                      </IconButton>
+                    </Tooltip>
+                    <ListItemText primary={task.title} secondary={
+                      (<React.Fragment>
+                        <FormattedDate value={task.due}/>
+                        -
+                        <FormattedTime value={task.due}/>
+                       </React.Fragment>
+                      )
+                    }/>
+                    <Tooltip title="Delete">
+                      <IconButton>
+                        <CancelCircleIcon color="error"/>
+                      </IconButton>
+                    </Tooltip>
                   </ListItem>)
               })}
                 </List>
