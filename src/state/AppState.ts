@@ -1,6 +1,7 @@
 import AuthState from "./AuthState";
+import TaskState from "./TaskState";
 
-export default class AppState{
+export default interface AppState{
     auth:AuthState;
     tasks:TaskState;
 }

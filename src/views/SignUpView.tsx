@@ -62,9 +62,9 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                 signInStatus: "Signing In..."
             });
             console.info("Checking if user already exists")
-            Auth.signIn(this.state.email, "foobar").then(result => {
+            Auth.signIn(this.state.email!, "foobar").then(() => {
                 throw new Error("Whoops");
-            }).catch(err => {
+            }).catch((err:any) => {
                 console.error(err);
                 switch (err.code) {
                     case "NotAuthorizedException":
@@ -86,7 +86,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                             console.error(err);
                         })
                 }
-            }).then((userCreationResult?: ISignUpResult) => {
+            }).then((userCreationResult: void|ISignUpResult) => {
                 if (userCreationResult) {
                     console.info("User creation complete");
                     this.setState({
@@ -98,6 +98,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                 } else {
                     console.error("Something went wrong when signing up.");
                 }
+                return userCreationResult;
             })
         }
     }
@@ -161,8 +162,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
     }
 }
 
-interface SignUpViewProps
-    implements RouteComponentProps {
+interface SignUpViewProps extends RouteComponentProps {
     history: History;
     location: Location;
     match: match<any>;

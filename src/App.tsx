@@ -9,7 +9,7 @@ import TasksView from "./views/TasksView";
 import MissingView from "./views/MissingView";
 import {Switch} from "react-router";
 import { Auth } from "aws-amplify";
-import AwsExports from "./aws-exports";
+import * as AwsExports from "./aws-exports";
 
 Auth.configure(AwsExports);
 

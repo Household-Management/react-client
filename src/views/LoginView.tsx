@@ -105,18 +105,18 @@ export class LoginView extends React.Component<LoginViewProps & LoginViewActions
     }
 }
 
-class LoginViewProps implements RouteComponentProps {
+interface LoginViewProps extends RouteComponentProps {
     history: History;
     location: Location;
     match: match<any>;
     staticContext?: StaticContext;
 }
 
-class LoginViewActions {
+interface LoginViewActions {
     authenticate: (user:CognitoUser) => void
 }
 
-class LoginViewState {
+interface LoginViewState {
     lastUpdatedProperty?: string;
     email?: string;
     emailInputMessage?: string;

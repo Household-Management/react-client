@@ -32,7 +32,7 @@ class WelcomeView extends Component<WelcomeViewProps> {
     }
 }
 
-class WelcomeViewProps implements RouteComponentProps{
+interface WelcomeViewProps extends RouteComponentProps{
     history: History;
     location: Location;
     match: match<any>;

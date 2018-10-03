@@ -1,7 +1,7 @@
 'use strict';
 import AWS = require("aws-sdk");
 
-export function saveData(data: any, context: any, callback: any) {
+export function saveData(event: any, context: any, callback: any) {
     try {
         const dynamodb = new AWS.DynamoDB();
         let tableName;
@@ -10,10 +10,16 @@ export function saveData(data: any, context: any, callback: any) {
                 tableName = "Homeplanit-Users-Staging";
                 break;
         }
+    if (!tableName) {
+        return callback({
+            statusCode: 500,
+            message: "No table name defined for specified stage"
+        })
+    }
     dynamodb.putItem({
-        Item: AWS.DynamoDB.Converter.marshall(data),
+        Item: AWS.DynamoDB.Converter.marshall(Object.assign(event.data, {username: event.user})),
         TableName: tableName
-    }, function (error, data) {
+    }, function (error:any, data:any) {
         callback(error, JSON.stringify({
             statusCode: 200
         }));

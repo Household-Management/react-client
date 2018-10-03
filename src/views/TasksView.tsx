@@ -1,8 +1,9 @@
 import * as React from "react";
-import {Grid, Button, TextField, List, ListItem, ListItemText, ListItemButton, Paper, IconButton} from "@material-ui/core";
+import {Grid, Button, TextField, List, ListItem, ListItemText, Paper, IconButton} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelCircleIcon from "@material-ui/icons/Cancel";
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import AppState from "../state/AppState";
 import ProtectedRoute from "../state/AuthenticatedRoute";
@@ -11,6 +12,7 @@ import Task from "../state/tasks/Task";
 import TaskAction from "../actions/NewTaskAction";
 import {FormattedDate, FormattedTime} from "react-intl";
 import Tooltip from "@material-ui/core/Tooltip";
+import TaskState from "../state/TaskState";
 
 @ProtectedRoute("/login")
 export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
@@ -37,10 +39,12 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
   }
   
   createTask() {
-    this.props.createTask(new Task(this.state.taskTitle, 
-      new Date(),
-      this.state.taskDueDate));
-    this.hideNewTaskModal();
+    if (this.state.taskTitle && this.state.taskDueDate){
+      this.props.createTask(new Task(this.state.taskTitle, 
+        new Date(),
+        this.state.taskDueDate));
+      this.hideNewTaskModal();
+    }
   }
   
   shouldComponentUpdate(nextProps:any, nextState:any){
@@ -54,7 +58,6 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
       direction="column"
       justify="center"
       alignItems="stretch"
-      justifyContent="center"
       spacing={16}
       >
         <Grid item xs={12}>
@@ -70,7 +73,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
               </Grid>
               <Grid item>
                 <List>
-                  {this.props.tasks.tasks.map(task => {
+                  {this.props.tasks.tasks.map((task:Task) => {
                 return (
                   <ListItem button>
                     <Tooltip title="Complete">
@@ -108,7 +111,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
       </Grid>
       <Modal
         isOpen={this.state.showModal}
-        style={{width: "50%"}}>
+        style={{content:{width: 50}}}>
         <Grid
           container
           direction="row"
@@ -144,8 +147,9 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
   }
 }
 
-interface TasksViewProps {
-  tasks:Task[];
+interface TasksViewProps extends AppState {
+  tasks:TaskState;
+  createTask: (task:Task)=>void;
 }
 
 interface TasksViewState{
