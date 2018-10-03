@@ -1,0 +1,92 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+
+environments: &environments
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.10
+
+version: 2
+jobs:
+  install:
+    <<: *environments
+    
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      
+      -  persist_to_workspace:
+            root: ./
+            paths:
+              - ./
+              
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+  lint:
+    <<: *environments
+    
+    steps:
+      - attach_workspace:
+          at: ./
+  
+      - run: node node_modules/tslint/bin/tslint --skipLibCheck --project tsconfig.json
+  build:
+    <<: *environments
+
+    steps:
+      - attach_workspace:
+          at: ./
+
+      - run: sudo npm i -g typescript
+      
+      - run: npm i
+      
+      - run: tsc
+      
+      - run: npm run build
+      
+      -  persist_to_workspace:
+            root: ./
+            paths:
+              - ./
+  test:
+    <<: *environments
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: 
+          command: npm test -- --runInBand --ci --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+  deploy_to_staging:
+    working_directory: ~/repo
+    docker:
+      - image: mesosphere/aws-cli
+    
+    steps:
+      - run: aws s3 sync ./build s3://homeplanitstaging-hosting-mobilehub-402297778/
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - install
+      - lint
+      - build
+      - test
+      - deploy_to_staging:
+          filters:
+            branches:
+              only:
+                - develop
+    
