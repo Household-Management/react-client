@@ -82,8 +82,14 @@ workflows:
     jobs:
       - install
       - lint
+          requires:
+            - install
       - build
+          requires:
+            - lint
       - test
+          requires:
+            - build
       - deploy_to_staging:
           filters:
             branches:
