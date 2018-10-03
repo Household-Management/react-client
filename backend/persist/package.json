@@ -4,7 +4,8 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "upload" : "aws lambda update-function-code --function-name homeplanit-persist-user-data --zip-file fileb://dist.zip"
   },
   "author": "",
   "license": "ISC",
