@@ -12,9 +12,10 @@ import WelcomeView from "./views/WelcomeView";
 
 import "./App.css";
 // tslint:disable-next-line:no-var-require
-import AwsExports = require("./aws-exports");
+import * as AwsExports from "./aws-exports";
 
-Auth.configure(AwsExports);
+console.log("Auth configure", AwsExports);
+Auth.configure(AwsExports.default);
 
 class App extends Component {
     public render() {

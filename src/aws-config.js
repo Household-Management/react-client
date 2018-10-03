@@ -6,18 +6,30 @@
 
 // AWS Mobile Hub Project Constants
 var aws_app_analytics = 'enable';
-var aws_cognito_identity_pool_id = 'us-east-1:da8c40ac-2ca8-401c-8319-e1da2550e841';
+var aws_cloud_logic = 'enable';
+var aws_cloud_logic_custom = [{"id":"gdn4b5smfa","name":"homeplanit","description":"API for Homeplanit apps","endpoint":"https://gdn4b5smfa.execute-api.us-east-1.amazonaws.com/staging","region":"us-east-1","paths":["/users/data/{id}"]}];
+var aws_cognito_identity_pool_id = 'us-east-1:73be8ae7-3808-497a-b285-a578087e82a2';
 var aws_cognito_region = 'us-east-1';
-var aws_mobile_analytics_app_id = 'd2aa15559f2e4c77bccf3f5581201c16';
+var aws_content_delivery = 'enable';
+var aws_content_delivery_bucket = 'homeplanitstaging-hosting-mobilehub-402297778';
+var aws_content_delivery_bucket_region = 'us-east-1';
+var aws_content_delivery_cloudfront = 'enable';
+var aws_content_delivery_cloudfront_domain = 'drzkt014tfff9.cloudfront.net';
+var aws_dynamodb = 'enable';
+var aws_dynamodb_all_tables_region = 'us-east-1';
+var aws_dynamodb_table_schemas = [{"tableName":"homeplanitstaging-mobilehub-402297778-Users","attributes":[{"name":"userId","type":"S"},{"name":"tasks","type":"L"}],"indexes":[],"region":"us-east-1","hashKey":"userId"}];
+var aws_mandatory_sign_in = 'enable';
+var aws_mobile_analytics_app_id = 'a1f17c3d76b243888f1ad415887857e3';
 var aws_mobile_analytics_app_region = 'us-east-1';
-var aws_project_id = 'bb8c2bb7-4c34-43ff-9de6-473408eb7f94';
-var aws_project_name = 'home-plan-it';
+var aws_project_id = 'fb21746f-719c-4a3c-aeac-4c75c9c75551';
+var aws_project_name = 'home-plan-it staging';
 var aws_project_region = 'us-east-1';
-var aws_resource_name_prefix = 'homeplanit-mobilehub-1303988138';
+var aws_resource_name_prefix = 'homeplanitstaging-mobilehub-402297778';
 var aws_sign_in_enabled = 'enable';
 var aws_user_pools = 'enable';
-var aws_user_pools_id = 'us-east-1_EB7I2RkH8';
-var aws_user_pools_web_client_id = '2ir6mhgjhms699aqetp00rtks6';
+var aws_user_pools_id = 'us-east-1_wC6dKzC07';
+var aws_user_pools_mfa_type = 'OFF';
+var aws_user_pools_web_client_id = '634od51h5n8t7rbnenft7pmu86';
 
 AWS.config.region = aws_project_region;
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({

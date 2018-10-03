@@ -1,0 +1,1 @@
+export module "aws-exports";
