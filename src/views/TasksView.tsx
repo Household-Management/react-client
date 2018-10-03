@@ -10,14 +10,16 @@ import AddIcon from "@material-ui/icons/Add";
 import CancelCircleIcon from "@material-ui/icons/Cancel";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
-import TaskAction from "../actions/NewTaskAction";
+import NewTaskAction from "../actions/NewTaskAction";
+import RemoveTaskAction from "../actions/RemoveTaskAction";
+
 import AppState from "../state/AppState";
 import ProtectedRoute from "../state/AuthenticatedRoute";
 import Task from "../state/tasks/Task";
 import TaskState from "../state/TaskState";
 
 @ProtectedRoute("/login")
-export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
+export class TasksView extends React.Component<TasksViewProps & TasksViewActions, TasksViewState> {
 
   constructor(props: any) {
     super(props);
@@ -26,6 +28,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
     };
     this.showNewTaskModal = this.showNewTaskModal.bind(this);
     this.createTask = this.createTask.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   public shouldComponentUpdate(nextProps: any, nextState: any) {
@@ -54,9 +57,9 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
               </Grid>
               <Grid item>
                 <List>
-                  {this.props.tasks.tasks.map((task: Task) => {
+                  {this.props.tasks.tasks.map((task: Task, index:number) => {
                 return (
-                  <ListItem button>
+                  <ListItem button key={task.title}>
                     <Tooltip title="Complete">
                       <IconButton>
                         <CheckCircleIcon color="primary"/>
@@ -71,7 +74,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
                       )
                     }/>
                     <Tooltip title="Delete">
-                      <IconButton>
+                      <IconButton onClick={this.removeTask.bind(this, task)}>
                         <CancelCircleIcon color="error"/>
                       </IconButton>
                     </Tooltip>
@@ -151,11 +154,19 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
       this.hideNewTaskModal();
     }
   }
+  
+  private removeTask(task: Task) {
+    this.props.removeTask(task);
+  }
 }
 
 interface TasksViewProps extends AppState {
   tasks: TaskState;
+}
+
+interface TasksViewActions {
   createTask: (task: Task) => void;
+  removeTask: (task: Task) => void;
 }
 
 interface TasksViewState {
@@ -169,8 +180,11 @@ const connected = connect((appState: AppState) => {
 }, (dispatch: Dispatch) => {
   return {
     createTask: (task: Task) => {
-      dispatch({... new TaskAction(task)});
+      dispatch({... new NewTaskAction(task)});
     },
+    removeTask: (task: Task) => {
+      dispatch({... new RemoveTaskAction(task)})
+    }
   };
 })(TasksView);
 
