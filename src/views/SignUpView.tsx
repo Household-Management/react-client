@@ -148,7 +148,7 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                     });
                     this.props.authenticate(userCreationResult.user);
                     console.info("Naigating to home");
-                    this.props.history.replace("/home");
+                    this.props.history.replace("/tasks");
                 } else {
                     console.error("Something went wrong when signing up.");
                 }
