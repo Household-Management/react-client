@@ -1,11 +1,11 @@
-import * as React from "react";
-import {Component} from "react"
-import {Grid, Button} from "@material-ui/core";
-import {match, RouteComponentProps, StaticContext, withRouter} from "react-router";
+import {Button, Grid} from "@material-ui/core";
 import {History, Location} from "history";
+import * as React from "react";
+import {Component} from "react";
+import {match, RouteComponentProps, StaticContext, withRouter} from "react-router";
 
 class WelcomeView extends Component<WelcomeViewProps> {
-    render() {
+    public render() {
         return (<Grid
             container
             direction="row"
@@ -23,7 +23,7 @@ class WelcomeView extends Component<WelcomeViewProps> {
             <Grid item xs={12}>
                 <div>
                     <Button variant="contained" color="primary" fullWidth
-                    onClick={()=>{
+                    onClick={() => {
                         this.props.history.push("/login");
                     }}>Log In</Button>
                 </div>
@@ -32,7 +32,7 @@ class WelcomeView extends Component<WelcomeViewProps> {
     }
 }
 
-interface WelcomeViewProps extends RouteComponentProps{
+interface WelcomeViewProps extends RouteComponentProps {
     history: History;
     location: Location;
     match: match<any>;

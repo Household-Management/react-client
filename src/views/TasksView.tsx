@@ -1,23 +1,25 @@
 import * as React from "react";
-import {Grid, Button, TextField, List, ListItem, ListItemText, Paper, IconButton} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelCircleIcon from "@material-ui/icons/Cancel";
-import { Dispatch } from "redux";
+import {FormattedDate, FormattedTime} from "react-intl";
+import * as Modal from "react-modal";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+
+import {Button, Grid, IconButton, List, ListItem, ListItemText, Paper,
+   TextField, Tooltip} from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import CancelCircleIcon from "@material-ui/icons/Cancel";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+
+import TaskAction from "../actions/NewTaskAction";
 import AppState from "../state/AppState";
 import ProtectedRoute from "../state/AuthenticatedRoute";
-import * as Modal from "react-modal";
 import Task from "../state/tasks/Task";
-import TaskAction from "../actions/NewTaskAction";
-import {FormattedDate, FormattedTime} from "react-intl";
-import Tooltip from "@material-ui/core/Tooltip";
 import TaskState from "../state/TaskState";
 
 @ProtectedRoute("/login")
 export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
 
-  constructor (props:any) {
+  constructor(props: any) {
     super(props);
     this.state = {
       showModal: false,
@@ -26,32 +28,11 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
     this.createTask = this.createTask.bind(this);
   }
 
-  showNewTaskModal () {
-    this.setState({
-      showModal: true
-    });
-  }
-
-  hideNewTaskModal () {
-    this.setState({
-      showModal: false
-    });
-  }
-  
-  createTask() {
-    if (this.state.taskTitle && this.state.taskDueDate){
-      this.props.createTask(new Task(this.state.taskTitle, 
-        new Date(),
-        this.state.taskDueDate));
-      this.hideNewTaskModal();
-    }
-  }
-  
-  shouldComponentUpdate(nextProps:any, nextState:any){
+  public shouldComponentUpdate(nextProps: any, nextState: any) {
     return this.state.showModal !== nextState.showModal;
   }
 
-  render () {
+  public render() {
     return(<React.Fragment>
       <Grid
       container
@@ -67,13 +48,13 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
               direction="column"
               alignItems="stretch">
               <Grid item>
-                <div style={{textAlign:"center"}}>
+                <div style={{textAlign: "center"}}>
                   To-Dos
                 </div>
               </Grid>
               <Grid item>
                 <List>
-                  {this.props.tasks.tasks.map((task:Task) => {
+                  {this.props.tasks.tasks.map((task: Task) => {
                 return (
                   <ListItem button>
                     <Tooltip title="Complete">
@@ -94,7 +75,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
                         <CancelCircleIcon color="error"/>
                       </IconButton>
                     </Tooltip>
-                  </ListItem>)
+                  </ListItem>);
               })}
                 </List>
               </Grid>
@@ -111,7 +92,7 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
       </Grid>
       <Modal
         isOpen={this.state.showModal}
-        style={{content:{width: 50}}}>
+        style={{content: {width: 50}}}>
         <Grid
           container
           direction="row"
@@ -124,17 +105,21 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
             <Grid item xs={12} sm={6} md={3}>
               <TextField
                 placeholder="Name"
-                onChange={e => {this.setState({
-                  taskTitle: e.target.value
-                })}}>
+                onChange={(e: any) => {
+                this.setState({
+                  taskTitle: e.target.value,
+                });
+                }}>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <TextField
               type="datetime-local"
-              onChange={e => {this.setState({
-                  taskDueDate: new Date(Date.parse(e.target.value))
-                })}}/>
+              onChange={(e: any) => {this.setState({
+                  taskDueDate: new Date(Date.parse(e.target.value)),
+                });
+              }}
+                />
             </Grid>
           </Grid>
           <Grid xs={12} item>
@@ -143,29 +128,50 @@ export class TasksView extends React.Component<TasksViewProps, TasksViewState> {
         </Grid>
       </Modal>
     </React.Fragment>
-    )
+    );
+  }
+
+  private showNewTaskModal() {
+    this.setState({
+      showModal: true,
+    });
+  }
+
+  private hideNewTaskModal() {
+    this.setState({
+      showModal: false,
+    });
+  }
+
+  private createTask() {
+    if (this.state.taskTitle && this.state.taskDueDate) {
+      this.props.createTask(new Task(this.state.taskTitle,
+        new Date(),
+        this.state.taskDueDate));
+      this.hideNewTaskModal();
+    }
   }
 }
 
 interface TasksViewProps extends AppState {
-  tasks:TaskState;
-  createTask: (task:Task)=>void;
+  tasks: TaskState;
+  createTask: (task: Task) => void;
 }
 
-interface TasksViewState{
-  showModal:boolean;
-  taskTitle?:string;
-  taskDueDate?:Date;
+interface TasksViewState {
+  showModal: boolean;
+  taskTitle?: string;
+  taskDueDate?: Date;
 }
 
-const connected = connect((appState:AppState)=>{
+const connected = connect((appState: AppState) => {
   return appState;
 }, (dispatch: Dispatch) => {
   return {
-    createTask: (task :Task) => {
+    createTask: (task: Task) => {
       dispatch({... new TaskAction(task)});
     },
-  }
+  };
 })(TasksView);
 
 export default connected;
