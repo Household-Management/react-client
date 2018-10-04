@@ -57,7 +57,7 @@ export class TasksView extends React.Component<TasksViewProps & TasksViewActions
               </Grid>
               <Grid item>
                 <List>
-                  {this.props.tasks.tasks.map((task: Task, index:number) => {
+                  {this.props.tasks.tasks.map((task: Task, index: number) => {
                 return (
                   <ListItem button key={task.title}>
                     <Tooltip title="Complete">
@@ -154,7 +154,7 @@ export class TasksView extends React.Component<TasksViewProps & TasksViewActions
       this.hideNewTaskModal();
     }
   }
-  
+
   private removeTask(task: Task) {
     this.props.removeTask(task);
   }
@@ -183,8 +183,8 @@ const connected = connect((appState: AppState) => {
       dispatch({... new NewTaskAction(task)});
     },
     removeTask: (task: Task) => {
-      dispatch({... new RemoveTaskAction(task)})
-    }
+      dispatch({... new RemoveTaskAction(task)});
+    },
   };
 })(TasksView);
 
