@@ -15,7 +15,7 @@ import "./App.css";
 import * as AwsExports from "./aws-exports";
 
 console.log("Auth configure", AwsExports);
-Auth.configure(AwsExports.default);
+Auth.configure((AwsExports as any).default);
 
 class App extends Component {
     public render() {
