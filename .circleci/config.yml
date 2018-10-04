@@ -47,7 +47,7 @@ jobs:
       
       - run: ls node_modules
       
-      - run: npx tslint -c tsconfig.json 
+      - run: npx tslint -c tsconfig.json -p src
   build:
     <<: *environments
 
