@@ -29,7 +29,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "compile" : "tsc --skipLibCheck",
-    "lint" : "tslint"
+    "compile": "tsc --skipLibCheck",
+    "lint": "tslint"
+  },
+  "devDependencies": {
+    "tslint": "^5.11.0"
   }
 }

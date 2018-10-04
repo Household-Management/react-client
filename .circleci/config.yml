@@ -27,8 +27,6 @@ jobs:
           
       - run: npm i
       
-      - run: ls
-      
       -  persist_to_workspace:
             root: ./
             paths:
@@ -47,7 +45,7 @@ jobs:
       
       - run: ls node_modules
       
-      - run: tslint --skipLibCheck --project tsconfig.json
+      - run: npx tslint -c tsconfig.json 
   build:
     <<: *environments
 
