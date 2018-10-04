@@ -43,7 +43,9 @@ jobs:
       - attach_workspace:
           at: ./
       
-      - run: ls tslint.json
+      - run: pwd
+      
+      - run: ls
       
       - run: npx tslint -c tslint.json --project tsconfig.json
   build:
