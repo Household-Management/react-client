@@ -47,7 +47,7 @@ jobs:
       
       - run: ls node_modules
       
-      - run: node node_modules/tslint/bin/tslint --skipLibCheck --project tsconfig.json
+      - run: tslint --skipLibCheck --project tsconfig.json
   build:
     <<: *environments
 
