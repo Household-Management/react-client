@@ -42,24 +42,20 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-          
-      - run: sudo npm i -g typescript
       
       - run: ls node_modules
       
-      - run: npx tslint -c tsconfig.json -p src
+      - run: npx tslint -c tslint.json --project tsconfig.json
   build:
     <<: *environments
 
     steps:
       - attach_workspace:
           at: ./
-
-      - run: sudo npm i -g typescript
       
       - run: npm i
       
-      - run: ls
+      - run: npx tsc --skipLibCheck
       
       - run: npm run build
       
