@@ -18,6 +18,17 @@ import ProtectedRoute from "../state/AuthenticatedRoute";
 import Task from "../state/tasks/Task";
 import TaskState from "../state/TaskState";
 
+import css from "./TasksView.css";
+
+Modal.setAppElement("#root");
+
+const modalStyle = {
+  content: {
+    width: "50%",
+    margin: "auto",
+  }
+}
+
 @ProtectedRoute("/login")
 export class TasksView extends React.Component<TasksViewProps & TasksViewActions, TasksViewState> {
 
@@ -95,7 +106,7 @@ export class TasksView extends React.Component<TasksViewProps & TasksViewActions
       </Grid>
       <Modal
         isOpen={this.state.showModal}
-        style={{content: {width: 50}}}>
+        style={modalStyle}>
         <Grid
           container
           direction="row"
