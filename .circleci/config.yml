@@ -43,7 +43,7 @@ jobs:
       - attach_workspace:
           at: ./
           
-      - run: npm i -g typescript
+      - run: sudo npm i -g typescript
       
       - run: ls node_modules
       
