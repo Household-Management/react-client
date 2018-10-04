@@ -84,7 +84,7 @@ jobs:
             sudo apt-get -y -qq install python3.4-dev
             curl -O https://bootstrap.pypa.io/get-pip.py
             python3.4 get-pip.py --user
-            pip install awscli --upgrade --user
+            pip3 install awscli --upgrade --user
             
       - run: aws s3 sync ./build s3://homeplanitstaging-hosting-mobilehub-402297778/
 
