@@ -44,7 +44,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-  
+      
+      - run: ls
+      
       - run: node node_modules/tslint/bin/tslint --skipLibCheck --project tsconfig.json
   build:
     <<: *environments
