@@ -4,14 +4,16 @@
 #
 
 environments: &environments
-  working_directory: ~/repo
+  working_directory: ~/
   docker:
     - image: circleci/node:8.10
 
 version: 2
 jobs:
   install:
-    <<: *environments
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.10
     
     steps:
       - checkout
@@ -24,6 +26,8 @@ jobs:
           - v1-dependencies-
           
       - run: npm i
+      
+      - run: ls
       
       -  persist_to_workspace:
             root: ./
@@ -53,7 +57,7 @@ jobs:
       
       - run: npm i
       
-      - run: tsc
+      - run: ls
       
       - run: npm run build
       
