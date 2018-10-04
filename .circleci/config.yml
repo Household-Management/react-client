@@ -30,9 +30,9 @@ jobs:
       - run: ls
       
       -  persist_to_workspace:
-            root: /home/circleci
+            root: ./
             paths:
-              - .
+              - ./
               
       - save_cache:
           paths:
@@ -45,7 +45,7 @@ jobs:
       - attach_workspace:
           at: ./
       
-      - run: ls ./node_modules/tslint
+      - run: ls node_modules
       
       - run: node node_modules/tslint/bin/tslint --skipLibCheck --project tsconfig.json
   build:
