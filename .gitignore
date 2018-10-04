@@ -23,7 +23,7 @@ yarn-error.log*
 **\.iml
 .idea
 
-*.js*
+*.js
 !index.js
 !App.test.js
 !aws-*.js
