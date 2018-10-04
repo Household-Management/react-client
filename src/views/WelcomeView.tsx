@@ -13,7 +13,7 @@ class WelcomeView extends Component<WelcomeViewProps> {
             alignItems="center"
         >
             <Grid item xs={12}>
-                <div style={{textAlign: "center"}}>Welcome Home</div>
+                <div id="Welcome" style={{textAlign: "center"}}>Welcome Home</div>
             </Grid>
             <Grid item xs={12}>
                 <div style={{textAlign: "center"}}>

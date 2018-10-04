@@ -187,7 +187,10 @@ interface TasksViewState {
 }
 
 const connected = connect((appState: AppState) => {
-  return appState;
+  return {
+    auth: appState.auth,
+    tasks: appState.userData.tasks,
+  };
 }, (dispatch: Dispatch) => {
   return {
     createTask: (task: Task) => {

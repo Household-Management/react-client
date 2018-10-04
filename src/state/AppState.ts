@@ -1,7 +1,7 @@
 import AuthState from "./AuthState";
-import TaskState from "./TaskState";
+import UserState from "./user/UserState";
 
 export default interface AppState {
     auth: AuthState;
-    tasks: TaskState;
+    userData: UserState;
 }

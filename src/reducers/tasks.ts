@@ -1,5 +1,6 @@
 import { Action } from "redux";
 
+import AuthenticateUserAction from "../actions/AuthenticateUserAction";
 import NewTaskAction from "../actions/NewTaskAction";
 import RemoveTaskAction from "../actions/RemoveTaskAction";
 import Task from "../state/tasks/Task";
@@ -9,6 +10,11 @@ export default (state: TaskState|undefined, action: Action<any>) => {
   if (state === undefined) {
     return new TaskState();
   }
+  
+  if (action.type === AuthenticateUserAction.TYPE) {
+        return new TaskState();
+    }
+  
   if (action.type === NewTaskAction.ACTION_TYPE) {
     const newTaskAction = (action as NewTaskAction);
     state.tasks.push(newTaskAction.task);
