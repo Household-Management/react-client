@@ -101,6 +101,8 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                         emailInputMessage: undefined,
                     });
                 }
+            default:
+                console.error("No matching case for lastUpdatedProperty", this.state.lastUpdatedProperty);
         }
         const valid = this.state.email && this.state.password && (this.state.password === this.state.passwordConfirm);
         return valid;
@@ -139,6 +141,8 @@ export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActi
                         }).catch((userError: any) => {
                             console.error(userError);
                         });
+                    default:
+                        console.error("No error should reach here", err);
                 }
             }).then((userCreationResult: void|ISignUpResult) => {
                 if (userCreationResult) {
