@@ -66,6 +66,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+
       - run: 
           command: npm test -- --runInBand --ci --reporters=default --reporters=jest-junit
           environment:
@@ -76,6 +77,9 @@ jobs:
       - image: mesosphere/aws-cli
     
     steps:
+      - attach_workspace:
+          at: ./
+
       - run: aws s3 sync ./build s3://homeplanitstaging-hosting-mobilehub-402297778/
 
 workflows:
