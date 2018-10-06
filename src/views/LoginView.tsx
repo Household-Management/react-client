@@ -8,7 +8,7 @@ import {Dispatch} from "redux";
 
 import {Button, Grid, TextField} from "@material-ui/core";
 
-import AuthenticateUserAction from "../actions/AuthenticateUserAction";
+import login from "../actions/login";
 import AppState from "../state/AppState";
 
 export class LoginView extends React.Component<LoginViewProps & LoginViewActions, LoginViewState> {
@@ -75,6 +75,7 @@ export class LoginView extends React.Component<LoginViewProps & LoginViewActions
     }
 
     private signIn() {
+        
         if (this.state.email && this.state.password) {
             this.setState({
                emailInputMessage: undefined,
@@ -83,31 +84,7 @@ export class LoginView extends React.Component<LoginViewProps & LoginViewActions
             this.setState({
                 signInStatus: "Signing In...",
             });
-            Auth.signIn(this.state.email!, this.state.password)
-            .then((user: CognitoUser) => {
-                this.setState({
-                    signInStatus: undefined,
-                });
-                this.props.authenticate(user);
-                this.props.history.replace("/tasks");
-            }).catch((err: any) => {
-                this.setState({
-                    signInStatus: undefined,
-                });
-                console.error(err);
-                switch (err.code) {
-                    case "UserNotFoundException":
-                        this.setState({
-                            emailInputMessage: "User was not found",
-                        });
-                        break;
-                    case "NotAuthorizedException":
-                        this.setState({
-                            passwordInputMessage: "Username and password "
-                            + "were invalid",
-                        });
-                }
-            });
+            this.props.login(this.state.email, this.state.password);
         }
     }
 }
@@ -120,6 +97,7 @@ interface LoginViewProps extends RouteComponentProps {
 }
 
 interface LoginViewActions {
+    login: (email: string, password: string) => void;
     authenticate: (user: CognitoUser) => void;
 }
 
@@ -136,9 +114,10 @@ const connected = connect((state: AppState, ownProps: any) => {
     return {...state, ...ownProps};
 }, (dispatch: Dispatch, ownProps: any) => {
     return {
-        authenticate: (user: CognitoUser) => {
-            dispatch({...new AuthenticateUserAction(user)});
-        },
+        login: (email:string, password:string) => {
+            console.log(ownProps.history);
+            return dispatch(login(email, password, ownProps.history));
+        }
     };
 })(LoginView);
 

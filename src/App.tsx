@@ -10,6 +10,8 @@ import SignUpView from "./views/SignUpView";
 import TasksView from "./views/TasksView";
 import WelcomeView from "./views/WelcomeView";
 
+import StatusModal from "./components/StatusModal";
+
 import "./App.css";
 // tslint:disable-next-line:no-var-require
 import * as AwsExports from "./aws-exports";
@@ -29,6 +31,7 @@ class App extends Component {
 
                     <Route component={MissingView}/>
                 </Switch>
+                <StatusModal/>
             </div>
         );
     }

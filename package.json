@@ -23,7 +23,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
-    "redux-persist": "^5.10.0"
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,7 +35,12 @@
     "lint": "tslint"
   },
   "devDependencies": {
+    "@types/faker": "^4.1.4",
+    "@types/jest": "^23.3.3",
+    "@types/puppeteer": "^1.8.0",
+    "@types/redux-thunk": "^2.1.0",
     "jest-junit": "^5.2.0",
+    "puppeteer": "^1.8.0",
     "tslint": "^5.11.0",
     "typescript": "^3.1.1"
   }

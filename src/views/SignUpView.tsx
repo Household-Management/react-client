@@ -8,7 +8,6 @@ import {Dispatch} from "redux";
 
 import {Button, Grid, TextField} from "@material-ui/core";
 
-import AuthenticateUserAction from "../actions/AuthenticateUserAction";
 import AppState from "../state/AppState";
 
 export class SignUpView extends React.Component<SignUpViewProps & SignUpViewActions, SignUpViewState> {
@@ -189,7 +188,7 @@ const connected = connect((state: any, ownProps: any) => {
 }, (dispatch: Dispatch, ownProps: any) => {
   return {
     authenticate: (user: CognitoUser) => {
-      dispatch({...new AuthenticateUserAction(user)});
+      console.log("Sign up");
     },
   };
 })(SignUpView);

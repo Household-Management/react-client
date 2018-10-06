@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import AuthenticateUserAction from "../actions/AuthenticateUserAction";
+import AuthenticateUserAction from "../actions/authenticate/AuthenticationCompleteAction";
 import NewTaskAction from "../actions/NewTaskAction";
 import RemoveTaskAction from "../actions/RemoveTaskAction";
 import Task from "../state/tasks/Task";
