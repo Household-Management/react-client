@@ -115,7 +115,6 @@ const connected = connect((state: AppState, ownProps: any) => {
 }, (dispatch: Dispatch, ownProps: any) => {
     return {
         login: (email:string, password:string) => {
-            console.log(ownProps.history);
             return dispatch(login(email, password, ownProps.history));
         }
     };

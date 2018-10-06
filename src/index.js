@@ -13,11 +13,12 @@ import { PersistGate } from 'redux-persist/integration/react'
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 import {IntlProvider} from "react-intl";
 import DatabasePersist from "./state/persistence/DatabasePersist";
+import thunk from "redux-thunk";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(persistReducer({storage, key: 'root', stateReconciler: hardSet},reducers), 
-    composeEnhancers(applyMiddleware(DatabasePersist)));
+    composeEnhancers(applyMiddleware(DatabasePersist, thunk)));
 
 ReactDOM.render(
     <Provider store={store}>

@@ -6,5 +6,5 @@ export default interface UserAuthProperties {
         idToken: {
             jwtToken: string
         }
-        };
+    };
 }
